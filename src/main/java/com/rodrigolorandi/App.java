@@ -135,8 +135,8 @@ public class App {
         var country = findCountryByName(string);
         if (country != null) {
             country.setCount(country.getCount() + 1);
-            var essa = country.getAdded();
-            essa.add(st);
+            var addNumberToCountryList = country.getAdded();
+            addNumberToCountryList.add(st);
         }
     }
 
