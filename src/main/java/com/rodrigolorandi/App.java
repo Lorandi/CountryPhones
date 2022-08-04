@@ -12,8 +12,8 @@ import java.util.*;
 public class App {
 
 
-    private static List<Country> list = new ArrayList<>();
-    private static List<String> allNumbers = new ArrayList<>();
+    private static final List<Country> list = new ArrayList<>();
+    private static final List<String> allNumbers = new ArrayList<>();
 
     public static void main(String[] args) {
         readInputsFromFile();
@@ -24,12 +24,12 @@ public class App {
     }
 
 
-    public static List<Country> readInputsFromFile() {
+    public static void readInputsFromFile() {
         String path = "src\\main\\resources\\coutryCodes.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
-            String temp[];
+            String[] temp;
             Long id = 0L;
 
 
@@ -50,9 +50,6 @@ public class App {
                 IOException e) {
             System.out.println("problema na leitura do arquivo");
             e.printStackTrace();
-        } finally {
-            Collections.sort(list);
-            return list;
         }
     }
 
@@ -78,9 +75,6 @@ public class App {
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
-            String temp[];
-            Long id = 0L;
-
             while ((line = br.readLine()) != null) {
                 allNumbers.add(line);
             }
@@ -99,17 +93,16 @@ public class App {
     public static String removeFirstCharIfNeeds(String str) {
         StringBuilder stringBuilder = new StringBuilder(str);
         if (str.startsWith("+")) {
-            stringBuilder = stringBuilder.deleteCharAt(0);
+            stringBuilder.deleteCharAt(0);
         }
         if (str.startsWith("00")) {
-            stringBuilder = stringBuilder.deleteCharAt(0).deleteCharAt(0);
+            stringBuilder.deleteCharAt(0).deleteCharAt(0);
         }
         return new String(stringBuilder);
     }
 
     public static boolean isLargeNumber(String str) {
         str = removeFirstCharIfNeeds(str);
-
         str = StringUtils.trimAllWhitespace(str);
 
         return str.matches("\\d{9,14}");
@@ -151,7 +144,7 @@ public class App {
                     var i = 0;
                     var j = i;
                     for (i = 0; i < country.getDdi().split("").length; i++) {
-                        if(i !=0 && number.charAt(j) == ' '){
+                        if (i != 0 && number.charAt(j) == ' ') {
                             j++;
                         }
                         if (country.getDdi().charAt(i) == number.charAt(j)) {
