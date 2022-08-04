@@ -25,7 +25,7 @@ public class App {
 
 
     public static List<Country> readInputsFromFile() {
-        String path = "D:\\treino\\PhoneNumbers\\src\\main\\resources\\coutryCodes.txt";
+        String path = "src\\main\\resources\\coutryCodes.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
@@ -74,7 +74,7 @@ public class App {
 
 
     public static void readCountryCodesFromFile() {
-        String path = "D:\\treino\\PhoneNumbers\\src\\main\\resources\\input.txt";
+        String path = "src\\main\\resources\\input.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
