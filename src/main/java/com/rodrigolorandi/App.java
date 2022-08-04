@@ -151,7 +151,6 @@ public class App {
                     var i = 0;
                     var j = i;
                     for (i = 0; i < country.getDdi().split("").length; i++) {
-
                         if(i !=0 && number.charAt(j) == ' '){
                             j++;
                         }
