@@ -22,8 +22,6 @@ import static javax.persistence.GenerationType.IDENTITY;
 @NoArgsConstructor
 public class Country implements Comparable<Country>{
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
     private String country;
     private String ddi;
     private Integer count;
