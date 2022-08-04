@@ -77,7 +77,7 @@ public class Service {
         for (String number : allNumbers) {
             var match = false;
             if (isSmallNumber(number)) {
-                addCountToCountry("Portugal", number);
+                addCountToCountry("Portugal", number, list);
             } else if (isLargeNumber(number)) {
                 number = removeFirstCharIfNeeds(number);
                 number = StringUtils.trimAllWhitespace(number);
@@ -91,63 +91,63 @@ public class Service {
                         }
                     }
                     if (match) {
-                        addCountToCountry(country.getCountry(), number);
+                        addCountToCountry(country.getCountry(), number, list);
                         break;
                     }
                 }
                 if (!match) {
-                    addCountToCountry("Invalid Numbers", number);
+                    addCountToCountry("Invalid Numbers", number, list);
                 }
             } else {
-                addCountToCountry("Invalid Numbers", number);
+                addCountToCountry("Invalid Numbers", number, list);
             }
         }
     }
 
-    public static boolean isSmallNumber(String st) {
-        var starsWithZero = st.startsWith("0");
-        var hasSmallNumberSize = st.matches("\\d{4,6}");
+    public static boolean isSmallNumber(String number) {
+        var starsWithZero = number.startsWith("0");
+        var hasSmallNumberSize = number.matches("\\d{4,6}");
 
         return !starsWithZero && hasSmallNumberSize;
     }
 
-    public static void addCountToCountry(String string, String st) {
-        var country = findCountryByName(string);
-        if (country != null) {
-            country.setCount(country.getCount() + 1);
-            var addNumberToCountryList = country.getAdded();
-            addNumberToCountryList.add(st);
+    public static void addCountToCountry(String country, String number, List<Country> list ) {
+        var find = findCountryByName(country, list);
+        if (find != null) {
+            find.setCount(find.getCount() + 1);
+            var addNumberToCountryList = find.getAdded();
+            addNumberToCountryList.add(number);
         }
     }
 
-    public static Country findCountryByName(String string) {
+    public static Country findCountryByName(String name, List<Country> list ) {
         for (Country country : list) {
-            if (country.getCountry().equals(string)) {
+            if (country.getCountry().equals(name)) {
                 return country;
             }
         }
         return null;
     }
 
-    public static  boolean isLargeNumber(String str) {
-        var check = hasNoWhiteSpaceBetweenStartsAndDDI(str);
-        str = removeFirstCharIfNeeds(str);
-        str = StringUtils.trimAllWhitespace(str);
+    public static  boolean isLargeNumber(String number) {
+        var check = hasNoWhiteSpaceBetweenStartsAndDDI(number);
+        number = removeFirstCharIfNeeds(number);
+        number = StringUtils.trimAllWhitespace(number);
 
-        return check && str.matches("\\d{9,14}");
+        return check && number.matches("\\d{9,14}");
     }
 
-    public static boolean hasNoWhiteSpaceBetweenStartsAndDDI(String str) {
-        return (!str.startsWith("+") || str.charAt(1) != ' ') &&
-                (!str.startsWith("00") || str.charAt(2) != ' ');
+    public static boolean hasNoWhiteSpaceBetweenStartsAndDDI(String number) {
+        return (!number.startsWith("+") || number.charAt(1) != ' ') &&
+                (!number.startsWith("00") || number.charAt(2) != ' ');
     }
 
-    public static String removeFirstCharIfNeeds(String str) {
-        StringBuilder stringBuilder = new StringBuilder(str);
-        if (str.startsWith("+")) {
+    public static String removeFirstCharIfNeeds(String number) {
+        StringBuilder stringBuilder = new StringBuilder(number);
+        if (number.startsWith("+")) {
             stringBuilder.deleteCharAt(0);
         }
-        if (str.startsWith("00")) {
+        if (number.startsWith("00")) {
             stringBuilder.deleteCharAt(0).deleteCharAt(0);
         }
         return new String(stringBuilder);
@@ -167,8 +167,5 @@ public class Service {
         readCountryCodesFromFile();
         countNumbersFromEachCountry();
         showOrderedByApperance();
-        System.out.println("acabou");
     }
-
-
 }
