@@ -4,10 +4,7 @@ import com.rodrigolorandi.entity.Country;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +17,10 @@ public class Service {
 
     private static final List<String> allNumbers = new ArrayList<>();
 
-    public static void readInputsFromFile() {
-        String path = "src\\main\\resources\\coutryCodes.txt";
+    public static void readCountryCodesFromFile() {
+
+//        String path = "src\\main\\resources\\coutryCodes.txt";
+        String path = "coutryCodes.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
@@ -47,16 +46,15 @@ public class Service {
     }
 
     public static void showList() {
-        readInputsFromFile();
+        readCountryCodesFromFile();
         for (Country country : list) {
             System.out.println(country.getCountry() + " " + country.getDdi());
         }
     }
 
-    public  static void readCountryCodesFromFile() {
-        String path = "src\\main\\resources\\input.txt";
+    public  static void readInputFromArgs(String string) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(string))) {
             String line;
             while ((line = br.readLine()) != null) {
                 allNumbers.add(line);
@@ -162,9 +160,9 @@ public class Service {
         }
     }
 
-    public static void run(){
-        readInputsFromFile();
+    public static void run(String args){
         readCountryCodesFromFile();
+        readInputFromArgs(args);
         countNumbersFromEachCountry();
         showOrderedByApperance();
     }
